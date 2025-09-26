@@ -1,20 +1,20 @@
-﻿using DcYoutubeBot.Commands;
+﻿using System;
+using System.Threading.Tasks;
+using DcYoutubeBot.Commands;
 using DcYoutubeBot.Commands.SlashCommands;
 using DcYoutubeBot.Config;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
 using DSharpPlus.SlashCommands;
-using DSharpPlus.VoiceNext;
-using System;
-using System.Threading.Tasks;
 
-namespace DcYoutubeBot
+namespace DiscordBot
 {
     internal class Program
     {
-        public static DiscordClient Client { get; set; }
-        public static CommandsNextExtension Commands { get; set; }
+        public static DiscordClient Client { get; private set; }
+        public static CommandsNextExtension Commands { get; private set; }
+
         static async Task Main(string[] args)
         {
             //Read configuration
@@ -38,16 +38,13 @@ namespace DcYoutubeBot
             Client = new DiscordClient(discordClientConfig);
             Client.Ready += _Client_Ready;
 
-            //Youtube configuration
-            Client.UseVoiceNext();
-
             //Commands configuration
             Commands = Client.UseCommandsNext(discordCommandsConfig);
             Commands.RegisterCommands<BasicCommands>();
 
             //Slash commands configuration
             var slash = Client.UseSlashCommands();
-            slash.RegisterCommands<MusicCommands>();
+            slash.RegisterCommands<AdminCommands>(); 
 
             //Connect to Discord
             await Client.ConnectAsync();

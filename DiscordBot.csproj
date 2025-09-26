@@ -51,6 +51,9 @@
     <Reference Include="DSharpPlus.Interactivity, Version=4.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\DSharpPlus.Interactivity.4.5.1\lib\netstandard2.0\DSharpPlus.Interactivity.dll</HintPath>
     </Reference>
+    <Reference Include="DSharpPlus.Lavalink, Version=4.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\DSharpPlus.Lavalink.4.5.1\lib\netstandard2.0\DSharpPlus.Lavalink.dll</HintPath>
+    </Reference>
     <Reference Include="DSharpPlus.SlashCommands, Version=4.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\DSharpPlus.SlashCommands.4.5.1\lib\netstandard2.0\DSharpPlus.SlashCommands.dll</HintPath>
     </Reference>
@@ -173,7 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\BasicCommands.cs" />
-    <Compile Include="Commands\SlashCommands\MusicCommands.cs" />
+    <Compile Include="Commands\SlashCommands\AdminCommands.cs" />
     <Compile Include="Config\BotConfigReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,12 +12,8 @@ using YoutubeExplode;
 
 namespace DcYoutubeBot.Commands.SlashCommands
 {
-    public class MusicCommands : ApplicationCommandModule
+    public class AdminCommands : ApplicationCommandModule
     {
-        [SlashCommand("play", "Lejátszik egy YouTube videót a voice csatornában")]
-        public async Task PlayAsync(InteractionContext ctx, [Option("query", "YouTube link vagy keresés")] string query)
-        {
-            await Task.CompletedTask;
-        }
+
     }
 }
