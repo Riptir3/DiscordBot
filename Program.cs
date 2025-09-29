@@ -12,12 +12,12 @@ namespace DiscordBot
 {
     internal class Program
     {
-        public static DiscordClient Client { get; private set; }
+        public static DiscordClient Client {  get; private set; }
         public static CommandsNextExtension Commands { get; private set; }
 
         static async Task Main(string[] args)
         {
-            //Read configuration
+            //Read config configuration
             var config = new BotConfigReader();
             await config.ReadJson();
 
@@ -36,6 +36,7 @@ namespace DiscordBot
             };
 
             Client = new DiscordClient(discordClientConfig);
+            // Event handlers for the Client
             Client.Ready += _Client_Ready;
 
             //Commands configuration
@@ -51,7 +52,7 @@ namespace DiscordBot
             await Task.Delay(-1);
         }
 
-        private static Task _Client_Ready(DiscordClient sender, ReadyEventArgs e)
+        private static Task _Client_Ready(DiscordClient sender, ReadyEventArgs e) //Event handler for when the client is ready
         {
             Console.WriteLine("Bot is ready");
             return Task.CompletedTask;

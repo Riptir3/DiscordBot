@@ -2,6 +2,7 @@
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DcYoutubeBot.Commands.SlashCommands
@@ -19,10 +20,11 @@ namespace DcYoutubeBot.Commands.SlashCommands
             {
                 Content = "Admin Commands:\n" +
                           "/help - Display admin only commands\n" +
-                          "/timeout - Ban a user\n" +
-                          "/kick - Unban a user\n" +
-                          "/ban - Mute a user\n" +
-                          "/unban - Unmute a user\n"
+                          "/timeout - Restrict user writing for a period of time\n" +
+                          "/kick - Kick a user\n" +
+                          "/banlist - Get all banned user\n" +
+                          "/ban - Ban a user\n" +
+                          "/unban - Unban a user"
             });
         }
 
@@ -79,6 +81,60 @@ namespace DcYoutubeBot.Commands.SlashCommands
                 Content = $"{user.Username} has been banned.\n" +
                           $"executed by {ctx.User.Username}"
             });
+        }
+
+        [SlashCommand("unban", "Unban selected user.")]
+        [RequireRoles(RoleCheckMode.SpecifiedOnly, "Admin")]
+        public async Task Unban(InteractionContext ctx, [Option("Id", "Id of banned user.")] string userId)
+        {
+            await ctx.DeferAsync();
+
+            var userIdLong = ulong.Parse(userId);
+
+            var user = await ctx.Client.GetUserAsync(userIdLong);
+            if (user == null)
+            {
+                await ctx.EditResponseAsync(new DiscordWebhookBuilder
+                {
+                    Content = $"User with ID {userId} not found.\n" +
+                              $"executed by {ctx.User.Username}"
+                });
+                return;
+            }
+
+            var guild = await ctx.Client.GetGuildAsync(ctx.Guild.Id);
+
+            await guild.UnbanMemberAsync(userIdLong);
+            await ctx.EditResponseAsync(new DiscordWebhookBuilder
+            {
+                Content = $"{user.Username} has been unbanned.\n" +
+                          $"executed by {ctx.User.Username}"
+            });
+        }
+
+        [SlashCommand("banlist", "Get all banned user.")]
+        [RequireRoles(RoleCheckMode.SpecifiedOnly, "Admin")]
+        public async Task BanListAsync(InteractionContext ctx)
+        {
+            var bans = await ctx.Guild.GetBansAsync();
+
+            if (bans.Count == 0)
+            {
+                await ctx.CreateResponseAsync("✅ No banned users.");
+                return;
+            }
+
+            // Összerakjuk a listát
+            var description = string.Join("\n", bans.Select(b =>
+                $"👤 **{b.User.Username}#{b.User.Discriminator}** – ID: `{b.User.Id}`"));
+
+            // Embedben küldjük vissza
+            var embed = new DiscordEmbedBuilder()
+                .WithTitle("🚫 Banned Users")
+                .WithDescription(description)
+                .WithColor(DiscordColor.Red);
+
+            await ctx.CreateResponseAsync(embed);
         }
     }
 }
