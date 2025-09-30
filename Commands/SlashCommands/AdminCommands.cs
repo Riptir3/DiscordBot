@@ -2,6 +2,7 @@
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +25,8 @@ namespace DcYoutubeBot.Commands.SlashCommands
                           "/kick - Kick a user\n" +
                           "/banlist - Get all banned user\n" +
                           "/ban - Ban a user\n" +
-                          "/unban - Unban a user"
+                          "/unban - Unban a user\n" +
+                          "/getlog - Get log file"
             });
         }
 
@@ -43,7 +45,7 @@ namespace DcYoutubeBot.Commands.SlashCommands
 
             await ctx.EditResponseAsync(new DiscordWebhookBuilder
             {
-                Content = $"{user.Username} has been timed out for {duration} seconds for: {reason}\n" +
+                Content = $"{user.Username} has been timed out for {duration} seconds because: {reason}\n" +
                           $"executed by {ctx.User.Username}"
             });
         }
@@ -124,17 +126,44 @@ namespace DcYoutubeBot.Commands.SlashCommands
                 return;
             }
 
-            // Összerakjuk a listát
             var description = string.Join("\n", bans.Select(b =>
                 $"👤 **{b.User.Username}#{b.User.Discriminator}** – ID: `{b.User.Id}`"));
 
-            // Embedben küldjük vissza
             var embed = new DiscordEmbedBuilder()
                 .WithTitle("🚫 Banned Users")
                 .WithDescription(description)
                 .WithColor(DiscordColor.Red);
 
             await ctx.CreateResponseAsync(embed);
+        }
+
+        [SlashCommand("getlog", "Get log file.")]
+        [RequireRoles(RoleCheckMode.SpecifiedOnly, "Admin")]
+        public async Task GetLog(InteractionContext ctx)
+        {
+            await ctx.DeferAsync();
+            var logFile = "slash_logs.yaml";
+            var logChannel = await ctx.Client.GetChannelAsync(1421148740290482337); // Replace with your log channel ID
+
+            if (File.Exists(logFile))
+            {
+                using (var fs = new FileStream(logFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    var msg = new DiscordMessageBuilder()
+                        .WithContent("📑 Here is the current log file:")
+                        .AddFile("slash_logs.yaml", fs);
+                        await logChannel.SendMessageAsync(msg);
+                }            }
+            else
+            {
+                await ctx.CreateResponseAsync("❌ Still no log file.");
+            }
+
+            await ctx.EditResponseAsync(new DiscordWebhookBuilder
+            {
+                Content = $"Log file has been sent to {logChannel.Mention}.\n" +
+                          $"executed by {ctx.User.Username}"
+            });
         }
     }
 }

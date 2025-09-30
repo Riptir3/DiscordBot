@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using DcYoutubeBot.Commands;
 using DcYoutubeBot.Commands.SlashCommands;
 using DcYoutubeBot.Config;
+using DcYoutubeBot.Logger;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
 using DSharpPlus.SlashCommands;
+using DSharpPlus.SlashCommands.EventArgs;
 
 namespace DiscordBot
 {
@@ -14,6 +16,8 @@ namespace DiscordBot
     {
         public static DiscordClient Client {  get; private set; }
         public static CommandsNextExtension Commands { get; private set; }
+
+        private static readonly SlashLogger logger = new SlashLogger();
 
         static async Task Main(string[] args)
         {
@@ -38,6 +42,7 @@ namespace DiscordBot
             Client = new DiscordClient(discordClientConfig);
             // Event handlers for the Client
             Client.Ready += _Client_Ready;
+            Client.MessageCreated += Client_MessageCreated;
 
             //Commands configuration
             Commands = Client.UseCommandsNext(discordCommandsConfig);
@@ -45,12 +50,34 @@ namespace DiscordBot
 
             //Slash commands configuration
             var slash = Client.UseSlashCommands();
-            slash.RegisterCommands<AdminCommands>(); 
+            slash.RegisterCommands<AdminCommands>();
+            slash.SlashCommandExecuted += Slash_SlashCommandExecuted;
 
             //Connect to Discord
             await Client.ConnectAsync();
             await Task.Delay(-1);
         }
+
+        private static Task Slash_SlashCommandExecuted(SlashCommandsExtension sender, SlashCommandExecutedEventArgs args) //Event handler for when a slash command is executed | Logger
+        {
+            return logger.LogCommand(args);
+        }
+
+        private static Task Client_MessageCreated(DiscordClient sender, MessageCreateEventArgs args) //Event handler for when a message is created
+        {
+            string[] forbiddenWords = { "fuck", "retard" };
+            foreach (var word in forbiddenWords)
+            {
+                if (args.Message.Content.ToLower().Contains(word))
+                {
+                    args.Message.DeleteAsync();
+                    args.Channel.SendMessageAsync($"{args.Message.Author.Mention}, please avoid using inappropriate language.");
+                    break;
+                }
+            }
+            return Task.CompletedTask;
+        }
+
 
         private static Task _Client_Ready(DiscordClient sender, ReadyEventArgs e) //Event handler for when the client is ready
         {

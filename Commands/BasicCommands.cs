@@ -1,8 +1,6 @@
-﻿using AngleSharp.Io;
-using DSharpPlus.CommandsNext;
+﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using System;
-using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -16,38 +14,50 @@ namespace DcYoutubeBot.Commands
         [Command("help")]
         public async Task TestCommand(CommandContext ctx)
         {
-            await ctx.RespondAsync($"Test command executed successfully by {ctx.User.Username}");
+            await ctx.TriggerTypingAsync();
+            string helpMessage = "Available commands:\n" +
+                                 "!help - Show this help message\n" +
+                                 "!joke - Get a random joke\n" +
+                                 "!weather <city> - Get the current weather for a city\n" +
+                                 "!recommend <movie name> - Get movie recommendations based on a movie";
+            await ctx.RespondAsync(helpMessage);
         }
 
         [Command("joke")]
         [Description("Get back a random fun from JokeApi")]
         public async Task JokeAsync(CommandContext ctx)
         {
-            using (var http = new HttpClient())
+            try
             {
-                var response = await http.GetStringAsync("https://v2.jokeapi.dev/joke/Any");
-                System.Console.WriteLine(response);
-
-                using (var doc = JsonDocument.Parse(response))
+                using (var http = new HttpClient())
                 {
-                    var root = doc.RootElement;
+                    var response = await http.GetStringAsync("https://v2.jokeapi.dev/joke/Any");
 
-                    string jokeText;
-
-                    var type = root.GetProperty("type").GetString();
-                    if (type == "single")
+                    using (var doc = JsonDocument.Parse(response))
                     {
-                        jokeText = root.GetProperty("joke").GetString();
-                    }
-                    else
-                    {
-                        var setup = root.GetProperty("setup").GetString();
-                        var delivery = root.GetProperty("delivery").GetString();
-                        jokeText = $"{setup}\n{delivery}";
-                    }
+                        var root = doc.RootElement;
 
-                    await ctx.RespondAsync(jokeText);
+                        string jokeText;
+
+                        var type = root.GetProperty("type").GetString();
+                        if (type == "single")
+                        {
+                            jokeText = root.GetProperty("joke").GetString();
+                        }
+                        else
+                        {
+                            var setup = root.GetProperty("setup").GetString();
+                            var delivery = root.GetProperty("delivery").GetString();
+                            jokeText = $"{setup}\n{delivery}";
+                        }
+
+                        await ctx.RespondAsync(jokeText);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                await ctx.RespondAsync("An error occurred while retrieving the joke.");
             }
         }
 
@@ -58,7 +68,7 @@ namespace DcYoutubeBot.Commands
 
             if (string.IsNullOrWhiteSpace(city))
             {
-                await ctx.RespondAsync("Kérlek, add meg a város nevét!");
+                await ctx.RespondAsync("Please give me the name of the city!");
                 return;
             }
             try
@@ -72,7 +82,7 @@ namespace DcYoutubeBot.Commands
 
                     if (geoJson.GetArrayLength() == 0)
                     {
-                        await ctx.RespondAsync("Nem található a város!");
+                        await ctx.RespondAsync("The city is not found!");
                         return;
                     }
                     string lat = geoJson[0].GetProperty("lat").GetString();
@@ -85,14 +95,13 @@ namespace DcYoutubeBot.Commands
                     var currentWeather = weatherJson.GetProperty("current_weather");
                     double temp = currentWeather.GetProperty("temperature").GetDouble();
                     double windSpeed = currentWeather.GetProperty("windspeed").GetDouble();
-                    string weatherCode = currentWeather.GetProperty("weathercode").GetInt32().ToString();
 
-                    await ctx.RespondAsync($"🌤 Weather in **{city}**:\nTemperature: {temp}°C\nWind speed: {windSpeed} km/h\nWeather code: {weatherCode}");
+                    await ctx.RespondAsync($"🌤 Weather in **{city}**:\nTemperature: {temp}°C\nWind speed: {windSpeed} km/h");
                 }
             }
-            catch
+            catch(Exception e)
             {
-                await ctx.RespondAsync("Hiba történt az időjárás lekérése közben.");
+                await ctx.RespondAsync("An error occurred while retrieving the weather.");
             }
         }
 
@@ -103,7 +112,7 @@ namespace DcYoutubeBot.Commands
 
             if (string.IsNullOrWhiteSpace(movieName))
             {
-                await ctx.RespondAsync("Kérlek, add meg a film nevét!");
+                await ctx.RespondAsync("Please give me the name of the movie!");
                 return;
             }
 
@@ -137,16 +146,15 @@ namespace DcYoutubeBot.Commands
                     var recommendResponse = await client.GetStringAsync(recommendUrl);
 
                     var recommendJson = JsonDocument.Parse(recommendResponse);
-                    Console.WriteLine(recommendJson);
                     var recommendations = recommendJson.RootElement.GetProperty("results");
      
                     if (recommendations.GetArrayLength() == 0)
                     {
-                        await ctx.RespondAsync($"Nincs ajánlás a(z) **{title}** című filmhez.");
+                        await ctx.RespondAsync($"There are no recommendations for the movie **{title}**.");
                         return;
                     }
 
-                    string message = $"🎬 Ajánlott filmek a(z) **{title}** alapján:\n";
+                    string message = $"🎬 Recommended movies based on **{title}**:\n";
                     int count = 0;
                     foreach (var movie in recommendations.EnumerateArray())
                     {
@@ -159,9 +167,9 @@ namespace DcYoutubeBot.Commands
                     await ctx.RespondAsync(message);
                 }
             }
-            catch
+            catch(Exception e)
             {
-                await ctx.RespondAsync("Hiba történt a filmek lekérése közben.");
+                await ctx.RespondAsync("An error occurred while retrieving movies.");
             }
         }
     }

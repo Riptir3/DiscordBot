@@ -165,6 +165,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=16.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
+      <HintPath>packages\YamlDotNet.16.3.0\lib\net47\YamlDotNet.dll</HintPath>
+    </Reference>
     <Reference Include="YoutubeExplode, Version=6.5.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\YoutubeExplode.6.5.4\lib\netstandard2.0\YoutubeExplode.dll</HintPath>
     </Reference>
@@ -173,6 +176,7 @@
     <Compile Include="Commands\BasicCommands.cs" />
     <Compile Include="Commands\SlashCommands\AdminCommands.cs" />
     <Compile Include="Config\BotConfigReader.cs" />
+    <Compile Include="Logger\SlashLogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
