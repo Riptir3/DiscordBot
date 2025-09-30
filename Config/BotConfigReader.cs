@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -6,8 +7,9 @@ namespace DcYoutubeBot.Config
 {
     public class BotConfigReader
     {
-        public string Token { get; set; }
-        public string Prefix { get; set; }
+        public string Token { get; private set; }
+        public string Prefix { get; private set; }
+        public List<string> ForbiddenWords { get; private set; }
 
         public async Task ReadJson()
         {
@@ -18,6 +20,7 @@ namespace DcYoutubeBot.Config
 
                 Token = data.Token;
                 Prefix = data.Prefix;
+                ForbiddenWords = data.ForbiddenWords;
             }
         }
     }
@@ -26,6 +29,7 @@ namespace DcYoutubeBot.Config
     {
         public string Token { get; set; }
         public string Prefix { get; set; }
+        public List<string> ForbiddenWords { get; set; }
     }
 
 }

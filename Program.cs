@@ -19,10 +19,11 @@ namespace DiscordBot
 
         private static readonly SlashLogger logger = new SlashLogger();
 
+        private static readonly BotConfigReader config = new BotConfigReader();
+
         static async Task Main(string[] args)
         {
             //Read config configuration
-            var config = new BotConfigReader();
             await config.ReadJson();
 
             //Discord configuration
@@ -65,8 +66,7 @@ namespace DiscordBot
 
         private static Task Client_MessageCreated(DiscordClient sender, MessageCreateEventArgs args) //Event handler for when a message is created
         {
-            string[] forbiddenWords = { "fuck", "retard" };
-            foreach (var word in forbiddenWords)
+            foreach (var word in config.ForbiddenWords)
             {
                 if (args.Message.Content.ToLower().Contains(word))
                 {

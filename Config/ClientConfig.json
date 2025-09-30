@@ -1,4 +1,5 @@
 ﻿{
   "token": "Token",
-  "prefix": "!"
+  "prefix": "!",
+  "forbiddenWords": [ "fuck", "retard" ]
 }
