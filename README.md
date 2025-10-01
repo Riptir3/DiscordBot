@@ -6,9 +6,8 @@ Célja, hogy egyszerre legyen **praktikus moderációs eszköz** és **szórakoz
 ---
 
 ## 📖 Tartalom
-- [Funkciók](#-funkciók)
+- [Funkciók & Használat](#-funkciók)
 - [Telepítés](#-telepítés)
-- [Használat](#-használat)
 - [Konfiguráció](#-konfiguráció)
 - [Logolás](#-logolás)
 - [Licenc](#-licenc)
@@ -40,17 +39,16 @@ Célja, hogy egyszerre legyen **praktikus moderációs eszköz** és **szórakoz
 ## ⚙️ Telepítés
 
 Előfeltételek:
-- [.NET 6/7 SDK](https://dotnet.microsoft.com/)  
+- Minimum [.NET 4 SDK](https://dotnet.microsoft.com/)  
 - Discord bot token
 - TMDB api token
 
 Lépések:
 ```bash
+# Visual Studio megnyítása
+
 # Repó klónozása
 git clone https://github.com/Riptir3/DiscordBot
 
-# Mappába lépés
-cd harry-botter
+# Futtatás
 
-# Build és futtatás
-dotnet run
