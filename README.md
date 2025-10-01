@@ -48,6 +48,9 @@ Célja, hogy egyszerre legyen **praktikus moderációs eszköz** és **szórakoz
 
 <img width="467" height="232" alt="Képernyőkép 2025-10-01 174502" src="https://github.com/user-attachments/assets/1e23a3ca-ae8c-49a4-b2ff-5768f8dc3147" />
 
+- Beolvasást a `Config/BotConfigReader` végzi
+- A `Program.cs`-ben kapja meg az összes többi osztály úgyanazt a `config` példányt
+
 ---
 ## Telepítés
 
