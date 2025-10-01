@@ -12,6 +12,8 @@ namespace DcYoutubeBot.Commands
 {
     public class BasicCommands : BaseCommandModule
     {
+        public static Config _config { private get; set; }
+
         [Command("help")]
         public async Task TestCommand(CommandContext ctx)
         {
@@ -32,7 +34,7 @@ namespace DcYoutubeBot.Commands
             {
                 using (var http = new HttpClient())
                 {
-                    var response = await http.GetStringAsync(Program.config.Apis.JokeApi);
+                    var response = await http.GetStringAsync(_config.Apis.JokeApi);
 
                     using (var doc = JsonDocument.Parse(response))
                     {
@@ -45,7 +47,7 @@ namespace DcYoutubeBot.Commands
                         {
                             jokeText = root.GetProperty("joke").GetString();
                         }
-                        else
+                        else 
                         {
                             var setup = root.GetProperty("setup").GetString();
                             var delivery = root.GetProperty("delivery").GetString();
@@ -74,7 +76,7 @@ namespace DcYoutubeBot.Commands
             }
             try
             {
-                string geoUrl = $"{Program.config.Apis.GeoApiUrl}/search?q={city}&format=json&limit=1";
+                string geoUrl = $"{_config.Apis.GeoApiUrl}/search?q={city}&format=json&limit=1";
                 using (var http = new HttpClient())
                 {
                     http.DefaultRequestHeaders.UserAgent.ParseAdd("DiscordBot/1.0 (example@example.com)");
@@ -89,7 +91,7 @@ namespace DcYoutubeBot.Commands
                     string lat = geoJson[0].GetProperty("lat").GetString();
                     string lon = geoJson[0].GetProperty("lon").GetString();
 
-                    string weatherUrl = $"{Program.config.Apis.WeatherApiUrl}?latitude={lat}&longitude={lon}&current_weather=true";
+                    string weatherUrl = $"{_config.Apis.WeatherApiUrl}?latitude={lat}&longitude={lon}&current_weather=true";
                     var weatherResponse = await http.GetStringAsync(weatherUrl);
 
                     var weatherJson = JsonDocument.Parse(weatherResponse).RootElement;
@@ -119,8 +121,8 @@ namespace DcYoutubeBot.Commands
 
             try
             {
-                string apiKey = $"{Program.config.Apis.MovieApiKey}";
-                string searchUrl = $"{Program.config.Apis.MovieApiUrl}?api_key={apiKey}&query={HttpUtility.UrlEncode(movieName)}";
+                string apiKey = $"{_config.Apis.MovieApiKey}";
+                string searchUrl = $"{_config.Apis.MovieApiUrl}?api_key={apiKey}&query={HttpUtility.UrlEncode(movieName)}";
                 using (var client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

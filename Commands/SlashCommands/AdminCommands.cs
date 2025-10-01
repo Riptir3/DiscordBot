@@ -1,6 +1,4 @@
-﻿using DcYoutubeBot.Config;
-using DiscordBot;
-using DSharpPlus.CommandsNext.Attributes;
+﻿using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using System;
@@ -8,10 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DcYoutubeBot.Commands.SlashCommands
-{
     public class AdminCommands : ApplicationCommandModule
     {
+        public static Config _config {private get; set; }
+
         [SlashCommand("help", "Display admin only commands")]
         [RequireRoles(RoleCheckMode.SpecifiedOnly, "Admin")]
 
@@ -145,7 +143,7 @@ namespace DcYoutubeBot.Commands.SlashCommands
         {
             await ctx.DeferAsync();
             var logFile = "slash_logs.yaml";
-            var logChannel = await ctx.Client.GetChannelAsync(Program.config.SafeChannelId);
+            var logChannel = await ctx.Client.GetChannelAsync(_config.SafeChannelId);
 
             if (File.Exists(logFile))
             {
@@ -168,4 +166,3 @@ namespace DcYoutubeBot.Commands.SlashCommands
             });
         }
     }
-}

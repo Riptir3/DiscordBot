@@ -1,13 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace DcYoutubeBot.Config
-{
     public class Config
     {
         public string Token { get; set; }
@@ -48,4 +44,4 @@ namespace DcYoutubeBot.Config
         }
     }
 
-}
+

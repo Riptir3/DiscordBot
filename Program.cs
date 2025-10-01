@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DcYoutubeBot.Commands;
-using DcYoutubeBot.Commands.SlashCommands;
-using DcYoutubeBot.Config;
 using DcYoutubeBot.Logger;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -21,7 +19,7 @@ namespace DiscordBot
 
         private static readonly SlashLogger logger = new SlashLogger();
 
-        public static Config config = new Config();
+        private static Config config;
         static async Task Main(string[] args)
         {
              config = await ConfigLoader.LoadAsync();
@@ -48,10 +46,12 @@ namespace DiscordBot
 
             //Commands configuration
             Commands = Client.UseCommandsNext(discordCommandsConfig);
+            BasicCommands._config = config; // Pass the config to BasicCommands
             Commands.RegisterCommands<BasicCommands>();
 
             //Slash commands configuration
             var slash = Client.UseSlashCommands();
+            AdminCommands._config = config; // Pass the config to AdminCommands
             slash.RegisterCommands<AdminCommands>();
             slash.SlashCommandExecuted += Slash_SlashCommandExecuted;
 
