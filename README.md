@@ -45,6 +45,9 @@ Célja, hogy egyszerre legyen **praktikus moderációs eszköz** és **szórakoz
 - Apis: tartalmazza az apik url címét
 -MovieApiKey: igénylése: https://developer.themoviedb.org/docs/getting-started
 
+
+<img width="467" height="232" alt="Képernyőkép 2025-10-01 174502" src="https://github.com/user-attachments/assets/1e23a3ca-ae8c-49a4-b2ff-5768f8dc3147" />
+
 ---
 ## Telepítés
 
