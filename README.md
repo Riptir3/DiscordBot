@@ -47,7 +47,7 @@ Előfeltételek:
 Lépések:
 ```bash
 # Repó klónozása
-git clone https://github.com/felhasznalo/harry-botter.git
+git clone https://github.com/Riptir3/DiscordBot
 
 # Mappába lépés
 cd harry-botter
