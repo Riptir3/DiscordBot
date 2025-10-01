@@ -6,37 +6,34 @@ Célja, hogy egyszerre legyen **praktikus moderációs eszköz** és **szórakoz
 ---
 
 ## 📖 Tartalom
-- [Funkciók & Használat](#-funkciók)
-- [Telepítés](#-telepítés)
-- [Konfiguráció](#-konfiguráció)
-- [Logolás](#-logolás)
-- [Licenc](#-licenc)
+- [Funkciok & Hasznalat](`#funkciok`)
+- [Telepites](`#telepites`)
 
 ---
 
-## ✨ Funkciók
+## ✨ Funkciok
 
 ### 🔒 Admin parancsok
 - `/kick <user>` → felhasználó kirúgása  
 - `/ban <user>` → felhasználó kitiltása
-- `/banlist` → bannont felhasználók listája
-- `/unban <user.id>` → bannont felhasználó feloldása
+- `/banlist` → bannolt felhasználók listája
+- `/unban <user.id>` → bannolt felhasználó feloldása
 - `/timeout <user><time>` → írás korlátozása, időkorlát beállításával
 - `/getlog` → admin parancsokhoz tartozó log file lekérése
 
-### 🎮 Prefix parancsok(API-k felhasználásával)
+### 🎮 Prefix parancsok (API-k felhasználásával)
 - `!joke` → random viccet ad vissza   
-- `!weather <város>` → időjárás megjelenítése a megadott városban  
-- `!recommend <film>` → hasonló filmeket ajánl az adott filmhez  
+- `!weather <varos>` → idojaras megjelenitese a megadott varosban  
+- `!recommend <film>` → hasonlo filmeket ajanl az adott filmhez  
 
-### 🛡️ Moderáció & logolás
-- Csúnya szavak törlése + felhasználó figyelmeztetése  
-- Új felhasználók köszöntése  
-- Egyelőre az admin parancsok logolása egy fájlba, amely kérés esetén elküldhető egy biztonságos csatornára  
+### 🛡️ Moderacio & logolas
+- Csunya szavak torlese + felhasznalo figyelmeztetese  
+- Uj felhasznalok koszontese  
+- Egyelore az admin parancsok logolasa egy fajlba, amely kereses eseten elkuldoheto egy biztonsagos csatornara  
 
 ---
 
-## ⚙️ Telepítés
+## ⚙️ Telepites
 
 Előfeltételek:
 - Minimum [.NET 4 SDK](https://dotnet.microsoft.com/)  
@@ -45,10 +42,9 @@ Előfeltételek:
 
 Lépések:
 ```bash
-# Visual Studio megnyítása
+# Visual Studio megnyitasa
 
-# Repó klónozása
+# Repo klónozasa
 git clone https://github.com/Riptir3/DiscordBot
 
-# Futtatás
-
+# Futtatas
