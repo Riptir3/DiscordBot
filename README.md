@@ -28,9 +28,9 @@ Célja, hogy egyszerre legyen **praktikus moderációs eszköz** és **szórakoz
 - `!recommend <film>` → hasonlo filmeket ajanl az adott filmhez  
 
 ### 🛡️ Moderacio & logolas
-- Csunya szavak torlese + felhasznalo figyelmeztetese  
-- Uj felhasznalok koszontese  
-- Egyelore az admin parancsok logolasa egy fajlba, amely kereses eseten elkuldoheto egy biztonsagos csatornara  
+- Csúnya szavak törlése + felhasználó figyelmeztetése  
+- Új felhasználók köszöntése  
+- Egyelőre az admin parancsok logolasa egy fajlba, amely kérés `/getlog` esetén elkuldoheto egy biztonsagos csatornara  
 
 ---
 
