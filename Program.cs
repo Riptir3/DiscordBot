@@ -6,6 +6,7 @@ using DcYoutubeBot.Config;
 using DcYoutubeBot.Logger;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.EventArgs;
@@ -44,6 +45,7 @@ namespace DiscordBot
             // Event handlers for the Client
             Client.Ready += _Client_Ready;
             Client.MessageCreated += Client_MessageCreated;
+            Client.GuildMemberAdded += Client_GuildMemberAdded;
 
             //Commands configuration
             Commands = Client.UseCommandsNext(discordCommandsConfig);
@@ -57,6 +59,20 @@ namespace DiscordBot
             //Connect to Discord
             await Client.ConnectAsync();
             await Task.Delay(-1);
+        }
+
+        private static async Task Client_GuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs args) //Event handler for when a new member joins the guild | Welcome message
+        {
+            var embed = new DiscordEmbedBuilder
+            {
+                Title = "Welcome to the server!",
+                Description = $"Hello {args.Member.Mention}, welcome to {args.Guild.Name}! We're glad to have you here.",
+                Color = DiscordColor.Blurple,
+                Thumbnail = new DiscordEmbedBuilder.EmbedThumbnail { Url = args.Member.AvatarUrl }
+            };
+            var channel = Client.GetChannelAsync(1422875539236061274); // Replace with your channel ID
+            await channel.Result.SendMessageAsync(embed: embed);
+            return;
         }
 
         private static Task Slash_SlashCommandExecuted(SlashCommandsExtension sender, SlashCommandExecutedEventArgs args) //Event handler for when a slash command is executed | Logger

@@ -55,7 +55,7 @@ namespace DcYoutubeBot.Commands
                     }
                 }
             }
-            catch (Exception e)
+            catch 
             {
                 await ctx.RespondAsync("An error occurred while retrieving the joke.");
             }
@@ -99,7 +99,7 @@ namespace DcYoutubeBot.Commands
                     await ctx.RespondAsync($"🌤 Weather in **{city}**:\nTemperature: {temp}°C\nWind speed: {windSpeed} km/h");
                 }
             }
-            catch(Exception e)
+            catch
             {
                 await ctx.RespondAsync("An error occurred while retrieving the weather.");
             }
@@ -167,7 +167,7 @@ namespace DcYoutubeBot.Commands
                     await ctx.RespondAsync(message);
                 }
             }
-            catch(Exception e)
+            catch
             {
                 await ctx.RespondAsync("An error occurred while retrieving movies.");
             }
