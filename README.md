@@ -6,12 +6,12 @@ Célja, hogy egyszerre legyen **praktikus moderációs eszköz** és **szórakoz
 ---
 
 ## 📖 Tartalom
-- [Funkciok & Hasznalat](`#funkciok`)
-- [Telepites](`#telepites`)
+- [Funkciok & Hasznalat](#funkciók)
+- [Telepites](#telepítés)
 
 ---
 
-## ✨ Funkciok
+## Funkciók
 
 ### 🔒 Admin parancsok
 - `/kick <user>` → felhasználó kirúgása  
@@ -33,7 +33,7 @@ Célja, hogy egyszerre legyen **praktikus moderációs eszköz** és **szórakoz
 
 ---
 
-## ⚙️ Telepites
+## Telepítés
 
 Előfeltételek:
 - Minimum [.NET 4 SDK](https://dotnet.microsoft.com/)  
@@ -42,9 +42,9 @@ Előfeltételek:
 
 Lépések:
 ```bash
-# Visual Studio megnyitasa
+# Visual Studio megnyítása
 
 # Repo klónozasa
 git clone https://github.com/Riptir3/DiscordBot
 
-# Futtatas
+# Futtatás
