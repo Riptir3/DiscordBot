@@ -7,8 +7,9 @@ Célja, hogy egyszerre legyen **praktikus moderációs eszköz** és **szórakoz
 
 ## 📖 Tartalom
 - [Funkciok & Hasznalat](#funkciók)
+- [Konfiguráció](#konfiguráció)
 - [Telepites](#telepítés)
-
+  
 ---
 
 ## Funkciók
@@ -33,6 +34,18 @@ Célja, hogy egyszerre legyen **praktikus moderációs eszköz** és **szórakoz
 
 ---
 
+## Konfiguráció
+
+- A konfigurációs file a `Config` mappában, a `ClientConfig.json` tartalmazza
+- Token: a bot egyedi **Access Tokene**, igénylése: https://discord.com/developers
+- Prefix: prefix parancsok első karaktere
+- forbiddenWords: lista, ami a tiltott szavakat tartalmazza
+- LogFilePath: log file neve
+- SafeChannelId & WelcomeChannelId: discord csatorna egyedi azonosítói
+- Apis: tartalmazza az apik url címét
+-MovieApiKey: igénylése: https://developer.themoviedb.org/docs/getting-started
+
+---
 ## Telepítés
 
 Előfeltételek:
