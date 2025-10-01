@@ -39,6 +39,7 @@ namespace DiscordBot
             };
 
             Client = new DiscordClient(discordClientConfig);
+
             // Event handlers for the Client
             Client.Ready += _Client_Ready;
             Client.MessageCreated += Client_MessageCreated;
