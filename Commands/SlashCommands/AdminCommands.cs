@@ -1,4 +1,6 @@
-﻿using DSharpPlus.CommandsNext.Attributes;
+﻿using DcYoutubeBot.Config;
+using DiscordBot;
+using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using System;
@@ -143,7 +145,7 @@ namespace DcYoutubeBot.Commands.SlashCommands
         {
             await ctx.DeferAsync();
             var logFile = "slash_logs.yaml";
-            var logChannel = await ctx.Client.GetChannelAsync(1421148740290482337); // Replace with your log channel ID
+            var logChannel = await ctx.Client.GetChannelAsync(Program.config.SafeChannelId);
 
             if (File.Exists(logFile))
             {

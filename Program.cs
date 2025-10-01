@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DcYoutubeBot.Commands;
 using DcYoutubeBot.Commands.SlashCommands;
@@ -20,12 +21,10 @@ namespace DiscordBot
 
         private static readonly SlashLogger logger = new SlashLogger();
 
-        private static readonly BotConfigReader config = new BotConfigReader();
-
+        public static Config config = new Config();
         static async Task Main(string[] args)
         {
-            //Read config configuration
-            await config.ReadJson();
+             config = await ConfigLoader.LoadAsync();
 
             //Discord configuration
             var discordClientConfig = new DiscordConfiguration
@@ -70,7 +69,7 @@ namespace DiscordBot
                 Color = DiscordColor.Blurple,
                 Thumbnail = new DiscordEmbedBuilder.EmbedThumbnail { Url = args.Member.AvatarUrl }
             };
-            var channel = Client.GetChannelAsync(1422875539236061274); // Replace with your channel ID
+            var channel = Client.GetChannelAsync(config.WelcomeChannelId); 
             await channel.Result.SendMessageAsync(embed: embed);
             return;
         }
@@ -82,7 +81,7 @@ namespace DiscordBot
 
         private static Task Client_MessageCreated(DiscordClient sender, MessageCreateEventArgs args) //Event handler for when a message is created
         {
-            foreach (var word in config.ForbiddenWords)
+            foreach (var word in new List<string> { "Fuck"})
             {
                 if (args.Message.Content.ToLower().Contains(word))
                 {

@@ -1,4 +1,5 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using DiscordBot;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using System;
 using System.Net.Http;
@@ -31,7 +32,7 @@ namespace DcYoutubeBot.Commands
             {
                 using (var http = new HttpClient())
                 {
-                    var response = await http.GetStringAsync("https://v2.jokeapi.dev/joke/Any");
+                    var response = await http.GetStringAsync(Program.config.Apis.JokeApi);
 
                     using (var doc = JsonDocument.Parse(response))
                     {
@@ -73,7 +74,7 @@ namespace DcYoutubeBot.Commands
             }
             try
             {
-                string geoUrl = $"https://nominatim.openstreetmap.org/search?q={city}&format=json&limit=1";
+                string geoUrl = $"{Program.config.Apis.GeoApiUrl}/search?q={city}&format=json&limit=1";
                 using (var http = new HttpClient())
                 {
                     http.DefaultRequestHeaders.UserAgent.ParseAdd("DiscordBot/1.0 (example@example.com)");
@@ -88,7 +89,7 @@ namespace DcYoutubeBot.Commands
                     string lat = geoJson[0].GetProperty("lat").GetString();
                     string lon = geoJson[0].GetProperty("lon").GetString();
 
-                    string weatherUrl = $"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true";
+                    string weatherUrl = $"{Program.config.Apis.WeatherApiUrl}?latitude={lat}&longitude={lon}&current_weather=true";
                     var weatherResponse = await http.GetStringAsync(weatherUrl);
 
                     var weatherJson = JsonDocument.Parse(weatherResponse).RootElement;
@@ -118,8 +119,8 @@ namespace DcYoutubeBot.Commands
 
             try
             {
-                string apiKey = "";
-                string searchUrl = $"https://api.themoviedb.org/3/search/movie?api_key={apiKey}&query={HttpUtility.UrlEncode(movieName)}";
+                string apiKey = $"{Program.config.Apis.MovieApiKey}";
+                string searchUrl = $"{Program.config.Apis.MovieApiUrl}?api_key={apiKey}&query={HttpUtility.UrlEncode(movieName)}";
                 using (var client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

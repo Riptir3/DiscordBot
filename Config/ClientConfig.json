@@ -1,5 +1,16 @@
 ﻿{
-  "token": "Token",
-  "prefix": "!",
-  "forbiddenWords": [ "fuck", "retard" ]
+  "Token": "Token",
+  "Prefix": "!",
+  "forbiddenWords": [ "", "" ],
+  "LogFilePath": "file",
+  "SafeChannelId": 1,
+  "WelcomeChannelId": 2,
+
+  "Apis": {
+    "JokeApi": "https://v2.jokeapi.dev/joke/Any",
+    "WeatherApiUrl": "https://api.open-meteo.com/v1/forecast",
+    "GeoApiUrl": "https://nominatim.openstreetmap.org",
+    "MovieApiKey": "Api-key",
+    "MovieApiUrl": "https://api.themoviedb.org/3/search/movie"
+  }
 }
